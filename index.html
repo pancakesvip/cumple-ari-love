@@ -1,0 +1,1143 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffe4f0">
+  <title>Una sorpresa para ti ♡</title>
+
+  <style>
+    :root {
+      --rosa: #ff8fbd;
+      --rosa-fuerte: #df4f91;
+      --lila: #b99ce8;
+      --crema: #fffaf5;
+      --texto: #69465d;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--texto);
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      background: linear-gradient(135deg, #fff1f7, #fffaf0, #f4edff);
+      overflow-x: hidden;
+    }
+
+    button, a { font: inherit; }
+    button { cursor: pointer; }
+
+    main {
+      max-width: 850px;
+      margin: auto;
+      padding: 16px;
+    }
+
+    .card {
+      margin: 20px 0;
+      padding: clamp(20px, 4vw, 36px);
+      background: #ffffffdc;
+      border: 2px solid white;
+      border-radius: 28px;
+      box-shadow: 0 12px 35px #b96e9625;
+    }
+
+    .hero { text-align: center; position: relative; }
+
+    h1 {
+      color: var(--rosa-fuerte);
+      font-size: clamp(2.2rem, 8vw, 4rem);
+      line-height: 1.12;
+    }
+
+    h2 { color: var(--rosa-fuerte); }
+    p { line-height: 1.75; }
+
+    .sticker {
+      display: inline-block;
+      margin: 4px 9px;
+      font-size: 2rem;
+      animation: flotar 2.5s ease-in-out infinite;
+    }
+
+    @keyframes flotar {
+      50% { transform: translateY(-8px) rotate(7deg); }
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: var(--rosa-fuerte);
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 0 #bd3978;
+      transition: transform .2s;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn.lila {
+      background: var(--lila);
+      box-shadow: 0 4px 0 #9675cc;
+    }
+
+    .btn.claro {
+      background: white;
+      color: var(--rosa-fuerte);
+      box-shadow: none;
+      border: 1px solid #f2b9d3;
+    }
+
+    .acciones {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    .nota {
+      font-size: .88rem;
+      color: #927285;
+    }
+
+    .popup-fondo {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: #53364dcc;
+    }
+
+    .popup {
+      width: min(440px, 100%);
+      text-align: center;
+      background: var(--crema);
+      border: 3px solid white;
+      border-radius: 26px;
+      padding: 28px;
+      box-shadow: 0 20px 70px #35152f55;
+      animation: aparecer .4s ease;
+    }
+
+    .popup .grande { font-size: 3rem; }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(.85); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .oculto { display: none !important; }
+
+    /* Carrusel de fotos */
+    .carrusel {
+      max-width: 500px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .marco-foto {
+      position: relative;
+      min-height: 320px;
+      aspect-ratio: 4 / 3;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffe0ed, #eee2ff);
+      border: 3px solid white;
+      box-shadow: 0 8px 25px #b96e9630;
+    }
+
+    .marco-foto img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      object-fit: cover;
+    }
+
+    .marco-foto .sin-foto {
+      padding: 20px;
+      font-size: 1.05rem;
+    }
+
+    .contador {
+      margin: 10px 0;
+      color: #986a88;
+    }
+
+    /* Carta */
+    .carta {
+      background: #fffaf2;
+      border: 1px solid #f3c4d9;
+      border-radius: 20px;
+      padding: 24px;
+      white-space: pre-line;
+      line-height: 1.9;
+    }
+
+    /* Pastel */
+    .pastel {
+      text-align: center;
+      font-size: clamp(5rem, 20vw, 8rem);
+    }
+
+    .velitas {
+      font-size: 2.5rem;
+      letter-spacing: 6px;
+      text-align: center;
+    }
+
+    /* Música */
+    .musica {
+      padding: 18px;
+      border-radius: 20px;
+      background: #f8efff;
+      text-align: center;
+    }
+
+    audio { width: 100%; margin-top: 12px; }
+
+    .corazon {
+      position: fixed;
+      z-index: 20;
+      pointer-events: none;
+      bottom: -35px;
+      animation: subir 3s ease-out forwards;
+    }
+
+    @keyframes subir {
+      to {
+        transform: translateY(-110vh) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #a27592;
+    }
+
+    @media (max-width: 500px) {
+      main { padding: 10px; }
+      .card { border-radius: 22px; }
+      .marco-foto { min-height: 250px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PANTALLA INICIAL -->
+  <div class="popup-fondo" id="bienvenida" role="dialog"
+       aria-modal="true" aria-labelledby="tituloBienvenida">
+    <div class="popup">
+      <div class="grande">🎀💌🐰</div>
+      <h2 id="tituloBienvenida">¡Una sorpresita para ti!</h2>
+      <p>
+        Preparé un pequeño universo lleno de recuerdos,
+        música y cariño. Ábrelo cuando estés lista. ♡
+      </p>
+      <button class="btn" id="abrir">Abrir mi sorpresa 💖</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- PORTADA -->
+    <section class="card hero">
+      <div>
+        <span class="sticker">🧸</span>
+        <span class="sticker">🎂</span>
+        <span class="sticker">🌷</span>
+      </div>
+
+      <p>୨୧ UN DÍA MUY ESPECIAL ୨୧</p>
+
+      <h1>
+        ¡Feliz cumpleaños,<br>
+        <span id="nombreAmiga">a mi bonita</span>! ♡
+      </h1>
+
+      <p>
+        Hoy el mundo tiene un poquito más de magia porque es
+        el día en que llegaste a él. Te preparé esta pequeña
+        sorpresa para recordarte cuánto vales y lo bonito que
+        es tenerte en mi vida. 💗
+      </p>
+
+      <div class="acciones">
+        <button class="btn" id="botonCorazones">
+          Lluvia de amor 💕
+        </button>
+        <a class="btn lila" href="#carta">Leer mi cartita 💌</a>
+      </div>
+
+      <p class="nota">Hecho con muchísimo cariño, especialmente para ti.</p>
+    </section>
+
+    <!-- CARRUSEL -->
+    <section class="card" id="fotos">
+      <h2>📸 Nuestros recuerdos bonitos</h2>
+      <p>
+        Cada foto guarda un pedacito de nuestra historia.
+        Ojalá tengamos muchísimos recuerdos más juntas. ♡
+      </p>
+
+      <div class="carrusel">
+        <div class="marco-foto" id="marcoFoto">
+          <div class="sin-foto" id="mensajeFoto">
+            🌷 Aquí aparecerán tus fotos.<br>
+            Añade tus imágenes a la carpeta <b>fotos</b>.
+          </div>
+          <img id="fotoActual" src="fotos/foto1.jpg"
+               alt="Recuerdo bonito" hidden>
+        </div>
+
+        <div class="contador" id="contador">Foto 1 de 3</div>
+
+        <div class="acciones">
+          <button class="btn claro" id="anterior">← Anterior</button>
+          <button class="btn" id="siguiente">Siguiente →</button>
+        </div>
+
+        <p class="nota">
+          Ari, Ari, Ari felices 21 vueltitas al sol mi bonita☀️
+        </p>
+      </div>
+    </section>
+
+    <!-- PASTEL -->
+    <section class="card">
+      <h2>🎂 Pide un deseo</h2>
+      <p>
+        Cierra los ojitos, piensa en algo que te haga feliz
+        y prepárate para recibir un abrazo de todo corazón.
+      </p>
+
+      <div class="velitas" id="velitas">🕯️🕯️🕯️</div>
+      <div class="pastel">🎂</div>
+
+      <div class="acciones">
+        <button class="btn" id="soplar">¡Soplar las velitas! 🌬️</button>
+      </div>
+
+      <p id="mensajeDeseo" aria-live="polite"></p>
+    </section>
+
+    <!-- MÚSICA DE FONDO -->
+    <section class="card">
+      <h2>🎶 Una canción para ti</h2>
+
+      <div class="musica">
+        <p>
+          <b>My One And Only Love</b><br>
+          Mon Laferte, Natalia Lafourcade y Silvana Estrada
+        </p>
+
+        <p>
+        Esta canción acompaña este pequeño regalo hecho con mucho
+         cariño para ti. 
+         Puedes reproducirla mientras descubres cada
+          sorpresa y lees estas palabras. 💗
+        </p>
+
+        <!--
+          Coloca tu archivo de audio en:
+          audio/musica.mp3
+
+          Si no añades ese archivo, el reproductor no tendrá
+          música local que reproducir.
+        -->
+        <audio id="musicaFondo" controls loop preload="none">
+          <source src="audio/musica.mp3" type="audio/mpeg">
+          Tu navegador no puede reproducir este audio.
+        </audio>
+
+        <p class="nota">
+          There's no reason Not to love you like I love you.
+        </p>
+
+        <div class="acciones">
+          <a class="btn lila"
+             href="https://www.youtube.com/watch?v=lcoqOPaBe9M"
+             target="_blank" rel="noopener noreferrer">
+            Escuchar la canción en YouTube ▶
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTA -->
+    <section class="card" id="carta">
+      <h2>💌 Una cartita para ti</h2>
+
+      <div class="carta" id="textoCarta">Feliz cumpleaños, Ariadna. ♡
+
+Hoy quiero recordarte lo especial que eres y lo feliz que me hace tenerte en mi vida. Ojalá este nuevo año te regale tranquilidad en los días difíciles, paciencia para los dias que Romanito, Oreo y Micha te vuelvan loca y motivos para reír hasta que te duela la pancita y personas que te quieran tan bonito como mereces.
+
+Gracias por cada conversación, cada risa, cada recuerdo y por ser tú, con tu forma única de hacer que los momentos sencillos se vuelvan importantes. Nunca olvides todo lo que vales ni la luz que llevas contigo.
+
+Deseo que la vida te sorprenda con cosas hermosas, que tus sueños encuentren camino y que siempre tengas un lugar seguro donde ser tú misma. Hoy y siempre, mereces amor, paz, abrazos largos y muchísimas razones para sonreír.
+
+Te amo muchísimo. Que este sea el comienzo de un año precioso. Feliz cumpleaños #21. 🎂💗
+
+Con todo mi amor,
+tu persona que te celebra ♡</div>
+
+      <div class="acciones">
+        <button class="btn" id="abrazo">Recibe un abrazo virtual 🫂</button>
+      </div>
+    </section>
+    <footer>
+      Hecho con cariño, ayuda del ingeniero Luca y un poquito de magia ♡<br>
+      Que tu nuevo año esté lleno de libros, series, regalos, buenas notas y salud. ✨
+    </footer>
+  </main>
+  <script>
+    /*
+      PERSONALIZA AQUÍ:
+      1. Escribe el nombre de tu amiga.
+      2. Cambia los nombres de las fotos si quieres.
+      3. Edita el texto de la carta directamente en el HTML.
+    */
+
+    const nombreDeTuAmiga = "a mi bonita";
+
+    // Cambia estos nombres para que coincidan con tus archivos.
+    const fotos = [
+      "fotos/foto1.jpg",
+      "fotos/foto2.jpg",
+      "fotos/foto3.jpg",
+      "fotos/foto4.jpg",
+      "fotos/foto5.jpg",
+      "fotos/foto6.jpg",
+    ];
+
+    let indiceFoto = 0;
+    let velitasApagadas = false;
+
+    document.getElementById("nombreAmiga").textContent = nombreDeTuAmiga;
+
+    const fotoActual = document.getElementById("fotoActual");
+    const mensajeFoto = document.getElementById("mensajeFoto");
+    const contador = document.getElementById("contador");
+
+    function mostrarFoto(indice) {
+      indiceFoto = (indice + fotos.length) % fotos.length;
+      fotoActual.src = fotos[indiceFoto];
+      fotoActual.alt = "Recuerdo " + (indiceFoto + 1);
+
+      contador.textContent =
+        "Foto " + (indiceFoto + 1) + " de " + fotos.length;
+
+      fotoActual.hidden = false;
+      mensajeFoto.hidden = true;
+
+      fotoActual.onerror = () => {
+        fotoActual.hidden = true;
+        mensajeFoto.hidden = false;
+        mensajeFoto.textContent =
+          "🌷 No se encontró " + fotos[indiceFoto] +
+          ". Revisa el nombre y la carpeta de la foto.";
+      };
+
+      fotoActual.onload = () => {
+        fotoActual.hidden = false;
+        mensajeFoto.hidden = true;
+      };
+    }
+
+    document.getElementById("anterior").addEventListener("click", () => {
+      mostrarFoto(indiceFoto - 1);
+    });
+
+    document.getElementById("siguiente").addEventListener("click", () => {
+      mostrarFoto(indiceFoto + 1);
+    });
+
+    // Abrir la sorpresa, animar corazones e intentar iniciar la música.
+    document.getElementById("abrir").addEventListener("click", async () => {
+      document.getElementById("bienvenida").classList.add("oculto");
+      lanzarCorazones(28);
+
+      const musica = document.getElementById("musicaFondo");
+      try {
+        await musica.play();
+      } catch (error) {
+        // El navegador puede bloquear el audio o faltar el archivo.
+        // La persona puede iniciar la música desde los controles.
+      }
+
+      document.getElementById("fotos").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("botonCorazones").addEventListener("click", () => {
+      lanzarCorazones(35);
+    });
+
+    document.getElementById("soplar").addEventListener("click", () => {
+      const velitas = document.getElementById("velitas");
+      const mensaje = document.getElementById("mensajeDeseo");
+      const boton = document.getElementById("soplar");
+
+      if (!velitasApagadas) {
+        velitas.textContent = "✨💨✨";
+        mensaje.textContent =
+          "¡Deseo enviado al universo! Que se te cumplan cosas hermosas. 💖";
+        boton.textContent = "Volver a encender las velitas 🕯️";
+        velitasApagadas = true;
+        lanzarCorazones(30);
+      } else {
+        velitas.textContent = "🕯️🕯️🕯️";
+        mensaje.textContent = "¡Pide otro deseo bonito! 🌟";
+        boton.textContent = "¡Soplar las velitas! 🌬️";
+        velitasApagadas = false;
+      }
+    });
+
+    document.getElementById("abrazo").addEventListener("click", () => {
+      lanzarCorazones(32);
+      alert("Te mando un abrazo enorme, de esos que duran mucho y lo arreglan todo. 🫂💗");
+    });
+
+    function lanzarCorazones(cantidad) {
+      const simbolos = ["💗", "💖", "💕", "🌸", "✨", "🎀"];
+
+      for (let i = 0; i < cantidad; i++) {
+        const corazon = document.createElement("span");
+        corazon.className = "corazon";
+        corazon.textContent =
+          simbolos[Math.floor(Math.random() * simbolos.length)];
+
+        corazon.style.left = Math.random() * 100 + "vw";
+        corazon.style.fontSize = (18 + Math.random() * 18) + "px";
+        corazon.style.animationDuration = (2 + Math.random() * 2) + "s";
+
+        document.body.appendChild(corazon);
+        setTimeout(() => corazon.remove(), 4500);
+      }
+    }
+</script>
+
+  </script>
+</body>
+<style>
+/* 🎀 NUEVAS FUNCIONES KAWAII */
+#regalosKawaii {
+  --rosa: #ff8fb8;
+  --rosa-claro: #fff0f6;
+  --rosa-fuerte: #e85d91;
+  --texto: #75465a;
+  color: var(--texto);
+  font-family: "Trebuchet MS", sans-serif;
+  max-width: 1000px;
+  margin: 35px auto;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+#regalosKawaii * { box-sizing: border-box; }
+
+#regalosKawaii h2 {
+  color: #d94f87;
+  font-size: clamp(23px, 4vw, 32px);
+  margin-bottom: 10px;
+}
+
+#regalosKawaii p { line-height: 1.7; }
+
+#regalosKawaii .rk-subtitulo {
+  margin: 0 auto 24px;
+  max-width: 600px;
+}
+
+#regalosKawaii .rk-tarjeta {
+  background: linear-gradient(145deg, #fff7fb, #ffe5f0);
+  border: 2px solid #ffc1d8;
+  border-radius: 25px;
+  padding: 22px;
+  margin: 22px auto;
+  box-shadow: 0 7px 18px #e99bb51c;
+}
+
+#regalosKawaii .rk-boton {
+  background: linear-gradient(135deg, #ffafd0, #ff7eae);
+  color: #702f4b;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  padding: 12px 19px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px #df69952b;
+  transition: transform .2s, filter .2s;
+}
+
+#regalosKawaii .rk-boton:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.04);
+}
+
+#regalosKawaii .rk-boton:focus-visible {
+  outline: 3px solid #b94077;
+  outline-offset: 4px;
+}
+
+/* 💌 Sobre y carta secreta */
+#regalosKawaii .rk-sobre {
+  display: block;
+  width: min(100%, 330px);
+  margin: 24px auto 10px;
+  padding: 25px 12px;
+  background: #ffd3e4;
+  border: 2px solid #ff9fc4;
+  border-radius: 18px;
+  cursor: pointer;
+  color: #a83c70;
+  font-size: 17px;
+  font-weight: bold;
+  box-shadow: 0 7px 0 #f6abc9;
+  transition: transform .2s;
+}
+
+#regalosKawaii .rk-sobre:hover {
+  transform: translateY(-4px) rotate(-1deg);
+}
+
+#regalosKawaii .rk-sobre .rk-icono-sobre {
+  display: block;
+  font-size: 65px;
+  margin-bottom: 8px;
+}
+
+#regalosKawaii .rk-carta {
+  display: none;
+  background: #fffdf5;
+  border: 1px solid #f3d7bd;
+  border-radius: 8px;
+  padding: clamp(18px, 5vw, 32px);
+  margin: 20px auto;
+  max-width: 650px;
+  text-align: left;
+  box-shadow: 0 8px 22px #a65c6920;
+  animation: rkAparecer .6s ease;
+}
+
+#regalosKawaii .rk-carta.abierta { display: block; }
+
+#regalosKawaii .rk-carta h3 {
+  text-align: center;
+  color: #d45c8b;
+}
+
+#regalosKawaii .rk-manuscrita {
+  font-family: "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 16px;
+  line-height: 2;
+  white-space: pre-line;
+}
+
+/* 🎁 Regalos virtuales */
+#regalosKawaii .rk-regalos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 24px;
+}
+
+#regalosKawaii .rk-regalo {
+  background: #fff;
+  border: 2px dashed #f6a4c5;
+  border-radius: 20px;
+  padding: 17px 8px;
+  min-width: 0;
+}
+
+#regalosKawaii .rk-caja {
+  display: block;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: clamp(36px, 7vw, 55px);
+  margin: 0 auto 8px;
+  transition: transform .25s;
+}
+
+#regalosKawaii .rk-caja:hover {
+  transform: scale(1.15) rotate(8deg);
+}
+
+#regalosKawaii .rk-regalo h3 {
+  font-size: 15px;
+  margin: 5px 0;
+}
+
+#regalosKawaii .rk-mensaje-regalo {
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+#regalosKawaii .rk-oculto { display: none; }
+
+/* 💗 Contador de cariño */
+#regalosKawaii .rk-contador {
+  color: #d94f87;
+  font-size: 35px;
+  font-weight: bold;
+  margin: 12px;
+}
+
+#regalosKawaii .rk-abrazo {
+  min-height: 75px;
+  font-size: 17px;
+  margin: 16px auto;
+  max-width: 600px;
+}
+
+/* 🌸 Corazones animados */
+.rk-corazon-volador {
+  position: fixed;
+  left: var(--rk-x);
+  top: var(--rk-y);
+  z-index: 9998;
+  pointer-events: none;
+  font-size: var(--rk-tamano, 24px);
+  animation: rkSubir var(--rk-duracion, 2s) ease-out forwards;
+}
+
+@keyframes rkSubir {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0); }
+  100% {
+    opacity: 0;
+    transform: translate(var(--rk-mover, 20px), -180px) rotate(30deg);
+  }
+}
+
+@keyframes rkAparecer {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🌙 Pantalla de sorpresa final */
+#rkFinal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  overflow-y: auto;
+  padding: 25px 16px;
+  background: linear-gradient(145deg, #ffe5f0, #fff8fc, #ffd9e9);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#rkFinal.rk-final-visible {
+  display: flex;
+  animation: rkAparecer .6s ease;
+}
+
+#rkFinal .rk-final-contenido {
+  width: min(100%, 650px);
+  padding: clamp(20px, 5vw, 40px);
+  border: 3px solid white;
+  border-radius: 30px;
+  background: #ffffffd9;
+  box-shadow: 0 10px 35px #c45e8b24;
+}
+
+#rkFinal h2 {
+  color: #d94f87;
+  font-size: clamp(29px, 7vw, 46px);
+  line-height: 1.3;
+}
+
+#rkFinal p { line-height: 1.8; }
+
+#rkFinal .rk-osito { font-size: 70px; }
+
+#rkFinal .rk-cerrar {
+  display: block;
+  margin: 18px auto 0;
+  background: transparent;
+  color: #a83c70;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 10px;
+}
+
+@media (max-width: 520px) {
+  #regalosKawaii .rk-regalos { grid-template-columns: 1fr; }
+  #regalosKawaii .rk-regalo { padding: 18px; }
+  #regalosKawaii .rk-mensaje-regalo { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #regalosKawaii *, #rkFinal * {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+
+<!-- 🎀 INICIO DE LAS NUEVAS SECCIONES -->
+<section id="regalosKawaii">
+
+  <!-- 💌 1. CARTA SECRETA -->
+  <section class="rk-tarjeta" id="rkSeccionCarta">
+    <h2>💌 Un poema para ti</h2>
+    <p class="rk-subtitulo">
+      Hay sentimientos que merecen escribirse despacito y guardarse
+      en un lugar bonito del corazón. 🌷
+    </p>
+
+    <button class="rk-sobre" id="rkAbrirSobre"
+      type="button" aria-expanded="false" aria-controls="rkCartaSecreta">
+      <span class="rk-icono-sobre" aria-hidden="true">💌</span>
+      Ábreme cuando estés lista
+      <span style="display:block;font-size:12px;font-weight:normal;margin-top:8px">
+        He guardado algo especial para ti ♡
+      </span>
+    </button>
+
+    <article class="rk-carta" id="rkCartaSecreta">
+      <h3>Para mi preciosa 🎀</h3>
+      <div class="rk-manuscrita"> Soneto XVII
+
+        No te amo como si fueras rosa de sal, topacio
+        o flecha de claveles que propagan el fuego:
+        te amo como se aman ciertas cosas oscuras,
+        secretamente, entre la sombra y el alma.
+
+        Te amo como la planta que no florece y lleva
+        dentro de sí, escondida, la luz de aquellas flores,
+        y gracias a tu amor vive oscuro en mi cuerpo
+        el apretado aroma que ascendió de la tierra.
+
+        Te amo sin saber cómo, ni cuándo, ni de dónde,
+        te amo directamente sin problemas ni orgullo:
+        así te amo porque no sé amar de otra manera,
+
+        sino así de este modo en que no soy ni eres,
+        tan cerca que tu mano sobre mi pecho es mía,
+        tan cerca que se cierran tus ojos con mi sueño.
+
+                                        - Pablo Neruda  
+
+ </div>
+      <p style="text-align:center;color:#d45c8b">
+        🌷 Siempre pensando en ti 🌷
+      </p>
+    </article>
+  </section>
+
+  <!-- 🎁 2. TRES REGALOS VIRTUALES -->
+  <section class="rk-tarjeta" id="rkSeccionRegalos">
+    <h2>🎁 Tres regalitos para ti</h2>
+    <p class="rk-subtitulo">
+      Escoge cada regalo para descubrir lo que escondí dentro.
+      ¡No vale abrirlos todos sin sonreír! 🧸
+    </p>
+
+    <div class="rk-regalos">
+      <article class="rk-regalo">
+        <button class="rk-caja" type="button" data-regalo="0"
+          aria-label="Abrir el regalo de un cumplido" aria-expanded="false"
+          aria-controls="rkMensaje0">🎁</button>
+        <h3>Un cumplido 🌷</h3>
+        <p class="rk-mensaje-regalo rk-oculto" id="rkMensaje0">
+          Eres una preciosa, no solo por fuera, sino por esa
+          forma tan tuya de dejar un poquito de luz en la vida de quienes
+          tienen la suerte de conocerte. Nunca olvides lo mucho que vales. 💗
+        </p>
+      </article>
+
+      <article class="rk-regalo">
+        <button class="rk-caja" type="button" data-regalo="1"
+          aria-label="Abrir el regalo de un recuerdo" aria-expanded="false"
+          aria-controls="rkMensaje1">🎁</button>
+        <h3>Un recuerdo 🧸</h3>
+        <p class="rk-mensaje-regalo rk-oculto" id="rkMensaje1">
+          De todos los recuerdos bonitos, mi favorito 
+          es cuando fuimos por primera vez a la madriguera
+          por alguna razón me encanta recordarla se sentia
+          como un espacio donde solo existimos tú y yo.
+          Ojalá nos queden muchísimos recuerdos más por vivir. 🎀
+        </p>
+      </article>
+
+      <article class="rk-regalo">
+        <button class="rk-caja" type="button" data-regalo="2"
+          aria-label="Abrir el regalo de un deseo" aria-expanded="false"
+          aria-controls="rkMensaje2">🎁</button>
+        <h3>Un deseo ✨</h3>
+        <p class="rk-mensaje-regalo rk-oculto" id="rkMensaje2">
+          Deseo que te atrevas a intentar lo que deseas y que la felicidad 
+          te encuentre incluso en los días más inesperados. 🌙
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 💗 3. CONTADOR DE CARIÑO -->
+  <section class="rk-tarjeta" id="rkSeccionAbrazos">
+    <h2>💗 Tu dosis de cariño</h2>
+    <p class="rk-subtitulo">
+      Si necesitas un abrazo, aunque sea virtual, toca el botón.
+      Te mandaré uno cada vez. 🫂
+    </p>
+
+    <div class="rk-contador" aria-live="polite">
+      <span id="rkNumeroAbrazos">0</span> 🩷
+    </div>
+    <button class="rk-boton" id="rkBotonAbrazo" type="button">
+      🫂 Toca aquí para recibir un abrazo
+    </button>
+    <p class="rk-abrazo" id="rkMensajeAbrazo" aria-live="polite">
+      Te mando el primer abrazo cuando tú quieras. 🎀
+    </p>
+  </section>
+
+  <!-- 🌙 INDICACIÓN DE LA SORPRESA FINAL -->
+  <section class="rk-tarjeta" id="rkAntesDelFinal">
+    <h2>🌙 Todavía queda una sorpresa...</h2>
+    <p>
+      Sigue bajando despacito. Al llegar al final encontrarás
+      un último mensajito hecho con mucho cariño. 💌
+    </p>
+    <p aria-hidden="true">🌸 ♡ 🧸 ♡ 🌸</p>
+  </section>
+
+  <!-- Este punto detecta cuando se llega al final -->
+  <div id="rkPuntoFinal" aria-hidden="true" style="height:8px"></div>
+</section>
+
+<!-- 🌙 4. PANTALLA FINAL -->
+<section id="rkFinal" role="dialog" aria-modal="true"
+  aria-labelledby="rkTituloFinal" aria-describedby="rkTextoFinal">
+  <div class="rk-final-contenido">
+    <div class="rk-osito" aria-hidden="true">🧸🎀</div>
+    <h2 id="rkTituloFinal">¡Mi regalo eres tú! 💗</h2>
+    <p id="rkTextoFinal">
+      Si llegaste hasta aquí, quiero que te lleves algo más que una
+      página bonita: el recordatorio de que tu existencia hace más
+      lindo este mundo.
+
+      Que tus sueños florezcan, que tu corazón encuentre paz y que
+      nunca te falten motivos para sonreír. No importa cuántas velitas
+      cumplas: siempre merecerás cosas bonitas, abrazos sinceros
+      y muchísimo amor.
+
+      Feliz cumpleaños, bonita. 🌷✨
+    </p>
+    <p style="font-size:25px">♡ 🌸 ♡ 🎂 ♡ 🌸 ♡</p>
+    <button class="rk-boton" id="rkVolverRegalo" type="button">
+      🎁 Volver a abrir mi regalo
+    </button>
+    <button class="rk-cerrar" id="rkCerrarFinal" type="button">
+      Cerrar y seguir viendo la página
+    </button>
+  </div>
+</section>
+
+<script>
+(() => {
+  // Evita registrar dos veces los eventos si se vuelve a ejecutar.
+  if (window.__cumpleKawaiiNuevasFunciones) return;
+  window.__cumpleKawaiiNuevasFunciones = true;
+
+  const buscar = id => document.getElementById(id);
+
+  // 💗 Lluvia de corazones
+  function lanzarCorazones(cantidad = 12) {
+    const simbolos = ["💗", "💕", "💖", "💘", "🌸", "🎀", "✨"];
+    for (let i = 0; i < cantidad; i++) {
+      const corazon = document.createElement("span");
+      corazon.className = "rk-corazon-volador";
+      corazon.textContent =
+        simbolos[Math.floor(Math.random() * simbolos.length)];
+
+      corazon.style.setProperty("--rk-x", Math.random() * 96 + "vw");
+      corazon.style.setProperty("--rk-y", (55 + Math.random() * 40) + "vh");
+      corazon.style.setProperty("--rk-tamano", (18 + Math.random() * 22) + "px");
+      corazon.style.setProperty("--rk-duracion", (1.5 + Math.random() * 1.8) + "s");
+      corazon.style.setProperty("--rk-mover", (Math.random() * 100 - 50) + "px");
+
+      document.body.appendChild(corazon);
+      corazon.addEventListener("animationend", () => corazon.remove(), {
+        once: true
+      });
+    }
+  }
+
+  // 💌 Abrir y cerrar la carta secreta
+  const botonSobre = buscar("rkAbrirSobre");
+  const carta = buscar("rkCartaSecreta");
+
+  botonSobre.addEventListener("click", () => {
+    const abierta = carta.classList.toggle("abierta");
+    botonSobre.setAttribute("aria-expanded", String(abierta));
+    botonSobre.querySelector(".rk-icono-sobre").textContent =
+      abierta ? "💌" : "✉️";
+
+    if (abierta) {
+      lanzarCorazones(10);
+      carta.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  });
+
+  // 🎁 Abrir cada regalo una sola vez; permite cerrarlo después.
+  document.querySelectorAll("#regalosKawaii .rk-caja").forEach(boton => {
+    boton.addEventListener("click", () => {
+      const mensaje = buscar("rkMensaje" + boton.dataset.regalo);
+      const abierto = mensaje.classList.toggle("rk-oculto");
+
+      boton.textContent = abierto ? "🎁" : "🎀";
+      boton.setAttribute("aria-expanded", String(!abierto));
+
+      if (!abierto) lanzarCorazones(8);
+    });
+  });
+
+  // 💗 Abrazos con mensajes aleatorios sin repetir hasta completar la lista.
+  const mensajesAbrazos = [
+  "🎂 Hoy celebro tu vida, pero todos los días agradezco tenerte en la mía.",
+  "🫂 Te mando un abrazo tan fuerte que ojalá pudiera atravesar la pantalla.",
+  "🧸 Abrazo de osito: suavecito, calentito y lleno de todo mi amor.",
+  "❤️ Si pudiera elegir mil veces, mil veces te elegiría a ti.",
+  "💋 Eres mi casualidad favorita y una de las cosas más bonitas que me ha regalado la vida.",
+  "🥹 Mi lugar favorito siempre será a tu lado.",
+  "🌷 Tu sonrisa tiene el poder de hacer que hasta mis días más difíciles sean bonitos.",
+  "✨ No sabes lo feliz que me hace tenerte en mi vida. Eres un regalo para mi corazón.",
+  "😘 Quiero ser ese abrazo al que siempre quieras regresar.",
+  "💗 Eres ese pensamiento bonito que aparece en mi mente y me hace sonreír sin razón.",
+  "💌 Ojalá pudiera darte un beso cada vez que te extraño.",
+  "🦋 Desde que llegaste, mis días tienen un poquito más de magia.",
+  "💍 No quiero un amor perfecto, quiero seguir construyendo una historia bonita contigo.",
+  "🌹 Nunca olvides lo valiosa, hermosa y maravillosa que eres. ¡Feliz cumpleaños, mi amor!",
+  "🎀 Que este nuevo año de vida esté lleno de sueños cumplidos y experiencias inolvidables.",
+  "💞 Espero acompañarte en muchísimos cumpleaños más y celebrar cada uno de tus logros.",
+  "🥰 Hoy el mundo celebra tu nacimiento y yo celebro la suerte de haberte encontrado.",
+  "🌸 Mereces todas las cosas bonitas que existen, porque tienes un corazón maravilloso.",
+  "🕯️ Que cada velita que soples se convierta en un deseo que pronto puedas cumplir.",
+  "💖 Quiero seguir creando recuerdos contigo y tener miles de momentos especiales que celebrar.",
+  "🎂 Feliz cumpleaños, amor mío. Mi mayor deseo es verte feliz y poder seguir amándote en cada etapa de tu vida."
+  ];
+
+  let mensajesDisponibles = [...mensajesAbrazos];
+  let totalAbrazos = 0;
+
+  buscar("rkBotonAbrazo").addEventListener("click", () => {
+    if (mensajesDisponibles.length === 0) {
+      mensajesDisponibles = [...mensajesAbrazos];
+    }
+
+    const indice = Math.floor(Math.random() * mensajesDisponibles.length);
+    const mensaje = mensajesDisponibles.splice(indice, 1)[0];
+
+    totalAbrazos++;
+    buscar("rkNumeroAbrazos").textContent = totalAbrazos;
+    buscar("rkMensajeAbrazo").textContent = mensaje;
+
+    lanzarCorazones(12);
+  });
+
+  // 🌙 Pantalla final al llegar al punto inferior de la página.
+  const pantallaFinal = buscar("rkFinal");
+  const puntoFinal = buscar("rkPuntoFinal");
+  let finalAbierto = false;
+  let finalDescartado = false;
+  let focoAnterior = null;
+
+  function mostrarFinal() {
+    if (finalAbierto || finalDescartado) return;
+
+    finalAbierto = true;
+    focoAnterior = document.activeElement;
+    pantallaFinal.classList.add("rk-final-visible");
+    document.body.style.overflow = "hidden";
+    lanzarCorazones(35);
+    buscar("rkVolverRegalo").focus({ preventScroll: true });
+  }
+
+  function cerrarFinal() {
+    finalAbierto = false;
+    finalDescartado = true;
+    pantallaFinal.classList.remove("rk-final-visible");
+    document.body.style.overflow = "";
+
+    if (focoAnterior && typeof focoAnterior.focus === "function") {
+      focoAnterior.focus({ preventScroll: true });
+    }
+  }
+
+  if ("IntersectionObserver" in window) {
+    const observador = new IntersectionObserver(entradas => {
+      if (entradas.some(entrada => entrada.isIntersecting)) {
+        mostrarFinal();
+      } else if (!finalAbierto) {
+        // Si la persona vuelve a subir, podrá ver la sorpresa al final otra vez.
+        finalDescartado = false;
+      }
+    }, { threshold: 0.1 });
+
+    observador.observe(puntoFinal);
+  } else {
+    // Alternativa para navegadores antiguos.
+    window.addEventListener("scroll", () => {
+      const cercaDelFinal =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 40;
+
+      if (cercaDelFinal) mostrarFinal();
+      else if (!finalAbierto) finalDescartado = false;
+    }, { passive: true });
+  }
+
+  buscar("rkCerrarFinal").addEventListener("click", cerrarFinal);
+
+buscar("rkVolverRegalo").addEventListener("click", () => {
+  cerrarFinal();
+  finalDescartado = false;
+
+  // Regresar al inicio de toda la página
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  lanzarCorazones(20);
+});
+
+  // Cerrar la pantalla final con Escape.
+  document.addEventListener("keydown", evento => {
+    if (evento.key === "Escape" && finalAbierto) {
+      cerrarFinal();
+    }
+  });
+})();
+</script>
+<!-- 🌸 FIN DE LAS NUEVAS FUNCIONES -->
+
+</html>
